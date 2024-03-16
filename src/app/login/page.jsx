@@ -18,9 +18,14 @@ function Login() {
                 alert("Please enter login credentials");
             } else {
                 const resposne = await axios.post("/api/Users/login", loginData);
-                const newUser = resposne.data;
-                console.log("Login Data => ", newUser);
-                router.push("/profile");
+
+                if (resposne.status === 400) {
+                    alert(resposne.error);
+                } else {
+                    const newUser = resposne.data;
+                    console.log("Login Data => ", newUser);
+                    router.push("/profile");
+                }
             }
         } catch (error) {
             console.error("Error at Login page => ", error.message);
